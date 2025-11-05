@@ -7,7 +7,9 @@
 ### 1주차
 
 - frontend: vite, backend: express 개발 환경 세팅하기
-- Github에서 PR / recent commit 가져오기
+- frontend/backend directory structure 확립
+- Github에서 PR / recent commit 가져오기 (backend)
+- 가져온 PR / recent commit를 보여주기 (frontend)
 
 ### 2주차
 
@@ -58,3 +60,26 @@ Or start this project using `start-all.sh`
 # at root directory, run
 sh start-all.sh
 ```
+
+## Directory Structure
+
+### Frontend
+
+- `src/`
+  - `constants/`
+  - `pages/`
+  - `styles/`
+  - `types/`
+  - `ui/`
+  - `utils/`
+  - `main.tsx`
+
+### Backend
+
+- `routes/`
+- `controllers/`
+- `services/`
+- `repositories/`
+- `models/`
+- `utils/`
+- `data/`
