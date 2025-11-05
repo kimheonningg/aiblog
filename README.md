@@ -92,3 +92,35 @@ sh start-all.sh
 - `models/`
 - `utils/`
 - `data/`
+
+## API Endpoints
+
+### Test API
+
+Test API to check if the server is running.
+
+```plaintext
+GET /test/version
+```
+
+### Github Data API
+
+API to fetch data from my Github.
+
+```plaintext
+GET /github-data/recent-commits
+```
+
+- Headers:
+
+```plaintext
+Authorization: Bearer ghp_YOUR_TOKEN
+Content-Type: application/json
+```
+
+- Query Parameters:
+  - `repo` (string): `kimheonningg/REPO_NAME`
+  - `since` (string (ISO 8601), optional): `2025-11-01T00:00:00Z`
+  - `until` (string (ISO 8601), optional): `2025-11-02T00:00:00Z`
+  - `per_page` (number, number of commits to fetch, optional): `20`
+  - `page` (number, page number to fetch, optional): `1`
