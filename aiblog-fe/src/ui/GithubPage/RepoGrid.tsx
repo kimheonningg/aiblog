@@ -40,15 +40,15 @@ const repoGridStyles: {
 };
 
 const RepoGrid = ({ repos }: RepoGridProps) => {
-	const [openRepo, setOpenRepo] = useState<string | null>(null);
+	const [openCommitRepo, setOpenCommitRepo] = useState<string | null>(null);
 	const [commits, setCommits] = useState<Record<string, CommitItem[]>>({});
 	const [loading, setLoading] = useState<Record<string, boolean>>({});
 	const [errors, setErrors] = useState<Record<string, string | null>>({});
 
-	const handleSelect = async (fullName: string) => {
+	const handleClickCommit = async (fullName: string) => {
 		// toggle
-		const nextOpen = openRepo === fullName ? null : fullName;
-		setOpenRepo(nextOpen);
+		const nextOpen = openCommitRepo === fullName ? null : fullName;
+		setOpenCommitRepo(nextOpen);
 		if (nextOpen === null) return;
 
 		// If already loaded: return
@@ -69,6 +69,10 @@ const RepoGrid = ({ repos }: RepoGridProps) => {
 		}
 	};
 
+	const handleClickPR = (fullName: string) => {
+		// TODO
+	};
+
 	if (!repos?.length) {
 		return (
 			<div className="card" style={repoGridStyles.empty}>
@@ -82,14 +86,18 @@ const RepoGrid = ({ repos }: RepoGridProps) => {
 			<div style={repoGridStyles.title}>My Github Public Repositories:</div>
 
 			{repos.map((repo) => {
-				const isOpen = openRepo === repo.full_name;
+				const isOpen = openCommitRepo === repo.full_name;
 				const isLoading = !!loading[repo.full_name];
 				const err = errors[repo.full_name];
 				const list = commits[repo.full_name] ?? [];
 
 				return (
 					<div key={repo.id}>
-						<RepoCard repo={repo} onSelect={handleSelect} />
+						<RepoCard
+							repo={repo}
+							onClickCommit={handleClickCommit}
+							onClickPR={handleClickPR}
+						/>
 
 						{isOpen && (
 							<div style={repoGridStyles.commitWrap}>
