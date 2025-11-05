@@ -9,7 +9,18 @@
 - frontend: vite, backend: express 개발 환경 세팅하기
 - frontend/backend directory structure 확립
 - Github에서 PR / recent commit 가져오기 (backend)
+  - repo list 가져오는 API 생성 (public repo만 가져오기)
+  - 선택된 repo에 대해, 그 repo의 commit들 가져오기
 - 가져온 PR / recent commit를 보여주기 (frontend)
+
+  - 공통 Header: `Header.tsx`
+    - Github 탭: 1주차 용 (내 깃헙의 repo/commit/PR 정보를 보여준다)
+    - Posts 탭: 2주차 & 3주차 용 (LLM이 생성한 Blog posts)
+    - About 탭: 내 프로필 (2주차 쯤 LLM으로 내용을 생성하여 만들 예정)
+  - `.env`: 환경 설정. 내 github token 저장되어 있음 (`.env.example` 참고)
+  - `RepoCard.tsx`: card for each public repo
+    - 각 `RepoCard` 클릭 시 그 repo의 commit 가져와서 보여주도록 (페이지 당 5개씩)
+  - `RepoGrid.tsx`: maps `RepoCard`s and shows all repos
 
 ### 2주차
 
