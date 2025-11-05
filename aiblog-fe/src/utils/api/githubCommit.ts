@@ -4,7 +4,7 @@ import { RECENT_COMMITS_API } from "../../constants/api";
 
 export async function fetchRecentCommits(
 	repoFullName: string,
-	perPage = 20
+	perPage = 30
 ): Promise<CommitListResponse> {
 	const token = import.meta.env.VITE_GITHUB_TOKEN;
 	if (!token || token.trim() === "") {

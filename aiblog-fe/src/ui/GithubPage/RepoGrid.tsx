@@ -57,7 +57,7 @@ const RepoGrid = ({ repos }: RepoGridProps) => {
 		setLoading((s) => ({ ...s, [fullName]: true }));
 		setErrors((s) => ({ ...s, [fullName]: null }));
 		try {
-			const res = await fetchRecentCommits(fullName, 20);
+			const res = await fetchRecentCommits(fullName, 30);
 			setCommits((s) => ({ ...s, [fullName]: res.items ?? [] }));
 		} catch (e: any) {
 			setErrors((s) => ({
@@ -81,15 +81,15 @@ const RepoGrid = ({ repos }: RepoGridProps) => {
 		<div style={repoGridStyles.grid}>
 			<div style={repoGridStyles.title}>My Github Public Repositories:</div>
 
-			{repos.map((r) => {
-				const isOpen = openRepo === r.full_name;
-				const isLoading = !!loading[r.full_name];
-				const err = errors[r.full_name];
-				const list = commits[r.full_name] ?? [];
+			{repos.map((repo) => {
+				const isOpen = openRepo === repo.full_name;
+				const isLoading = !!loading[repo.full_name];
+				const err = errors[repo.full_name];
+				const list = commits[repo.full_name] ?? [];
 
 				return (
-					<div key={r.id}>
-						<RepoCard repo={r} onSelect={handleSelect} />
+					<div key={repo.id}>
+						<RepoCard repo={repo} onSelect={handleSelect} />
 
 						{isOpen && (
 							<div style={repoGridStyles.commitWrap}>
