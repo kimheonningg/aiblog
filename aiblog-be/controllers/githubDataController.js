@@ -1,6 +1,46 @@
-import { listRecentCommitsService } from "../services/githubDataService.js";
+import {
+	listMyReposService,
+	listRecentCommitsService,
+} from "../services/githubDataService.js";
 import { validateRecentCommitsQuery } from "../models/githubModels.js";
+import { validateMyReposQuery } from "../models/githubModels.js";
 import { getBearerToken } from "../utils/auth.js";
+
+export async function getMyRepos(req, res, next) {
+	try {
+		const token = getBearerToken(req);
+
+		const query = validateMyReposQuery({
+			per_page: req.query.per_page,
+			page: req.query.page,
+			sort: req.query.sort,
+			direction: req.query.direction,
+			visibility: "public", // public repo only
+		});
+
+		const result = await listMyReposService({
+			token,
+			per_page: query.per_page,
+			page: query.page,
+			sort: query.sort,
+			direction: query.direction,
+			visibility: query.visibility,
+		});
+
+		if (result.meta) {
+			const { remaining, limit, reset } = result.meta;
+			if (remaining != null)
+				res.set("x-ratelimit-remaining", String(remaining));
+			if (limit != null) res.set("x-ratelimit-limit", String(limit));
+			if (reset != null) res.set("x-ratelimit-reset", String(reset));
+			if (result.link) res.set("link", result.link); // GitHub pagination Link header 그대로 전달(옵션)
+		}
+
+		res.json({ items: result.items });
+	} catch (err) {
+		next(err);
+	}
+}
 
 export async function getRecentCommits(req, res, next) {
 	try {

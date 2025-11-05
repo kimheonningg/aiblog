@@ -1,4 +1,26 @@
 import { makeOctokit } from "../utils/octokit.js";
+import { clamp } from "../utils/clamp.js";
+
+export async function listMyReposRepo({
+	token,
+	per_page = 30,
+	page = 1,
+	sort = "updated",
+	direction = "desc",
+	visibility = "public", // public repo only
+}) {
+	const octokit = makeOctokit(token);
+
+	const res = await octokit.repos.listForAuthenticatedUser({
+		per_page: clamp(per_page, 1, 100),
+		page,
+		sort,
+		direction,
+		visibility: "public", // public repo only
+	});
+
+	return { repos: res.data ?? [] };
+}
 
 export async function listRecentCommitsRepo({
 	token,
@@ -29,9 +51,4 @@ export async function listRecentCommitsRepo({
 	};
 
 	return { commits: res.data ?? [], meta };
-}
-
-function clamp(n, min, max) {
-	const x = Number(n) || min;
-	return Math.max(min, Math.min(max, x));
 }

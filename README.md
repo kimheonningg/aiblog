@@ -107,6 +107,25 @@ GET /test/version
 
 API to fetch data from my Github.
 
+#### My Repos
+
+API to fetch my public repo data from my Github.
+
+```plaintext
+GET /github-data/my-repos
+```
+
+- Headers:
+
+```plaintext
+Authorization: Bearer ghp_YOUR_TOKEN
+Content-Type: application/json
+```
+
+#### Recent Commits
+
+API to fetch recent commit data from my Github repository.
+
 ```plaintext
 GET /github-data/recent-commits
 ```
