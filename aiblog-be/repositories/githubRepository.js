@@ -52,3 +52,62 @@ export async function listRecentCommitsRepo({
 
 	return { commits: res.data ?? [], meta };
 }
+
+export async function listPullRequestsRepo({
+	token,
+	repoFullName,
+	state = "all",
+	per_page = 20,
+	page = 1,
+}) {
+	const octokit = makeOctokit(token);
+
+	const me = await octokit.users.getAuthenticated();
+	const authorLogin = me?.data?.login;
+	if (!authorLogin) {
+		throw new Error("Failed to resolve authenticated user (login).");
+	}
+
+	const stateClause = state === "all" ? "" : ` is:${state}`;
+	const q = `repo:${repoFullName} type:pr author:${authorLogin}${stateClause}`;
+
+	const res = await octokit.search.issuesAndPullRequests({
+		q,
+		sort: "updated",
+		order: "desc",
+		per_page: clamp(per_page, 1, 100),
+		page,
+	});
+
+	const rateLimit = res.headers || {};
+	const meta = {
+		remaining: Number(rateLimit["x-ratelimit-remaining"]),
+		limit: Number(rateLimit["x-ratelimit-limit"]),
+		reset: Number(rateLimit["x-ratelimit-reset"]),
+	};
+
+	const prs = (res.data?.items ?? []).map((it) => ({
+		id: String(it.id),
+		number: it.number,
+		title: it.title,
+		body: it.body || "",
+		html_url: it.html_url,
+		state: it.state,
+		created_at: it.created_at,
+		updated_at: it.updated_at,
+		user: {
+			login: it.user?.login,
+			avatar_url: it.user?.avatar_url,
+		},
+		is_merged: Boolean(it.pull_request?.merged_at),
+		repo: repoFullName,
+	}));
+
+	return {
+		prs,
+		total: res.data?.total_count ?? 0,
+		page,
+		per_page: clamp(per_page, 1, 100),
+		meta,
+	};
+}

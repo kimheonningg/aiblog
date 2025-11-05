@@ -1,9 +1,13 @@
 import {
 	listMyReposService,
 	listRecentCommitsService,
+	listMyPullRequestsService,
 } from "../services/githubDataService.js";
-import { validateRecentCommitsQuery } from "../models/githubModels.js";
-import { validateMyReposQuery } from "../models/githubModels.js";
+import {
+	validateRecentCommitsQuery,
+	validateMyReposQuery,
+	validateMyPullRequestsQuery,
+} from "../models/githubModels.js";
 import { getBearerToken } from "../utils/auth.js";
 
 export async function getMyRepos(req, res, next) {
@@ -74,6 +78,44 @@ export async function getRecentCommits(req, res, next) {
 		}
 
 		res.json({ items: result.items });
+	} catch (err) {
+		next(err);
+	}
+}
+
+export async function getMyPullRequests(req, res, next) {
+	try {
+		const token = getBearerToken(req);
+
+		const query = validateMyPullRequestsQuery({
+			repo: req.query.repo,
+			state: req.query.state,
+			per_page: req.query.per_page,
+			page: req.query.page,
+		});
+
+		const result = await listMyPullRequestsService({
+			token,
+			repoFullName: query.repo,
+			state: query.state,
+			per_page: query.per_page,
+			page: query.page,
+		});
+
+		if (result.meta) {
+			const { remaining, limit, reset } = result.meta;
+			if (remaining != null)
+				res.set("x-ratelimit-remaining", String(remaining));
+			if (limit != null) res.set("x-ratelimit-limit", String(limit));
+			if (reset != null) res.set("x-ratelimit-reset", String(reset));
+		}
+
+		res.json({
+			items: result.items,
+			total: result.total,
+			page: result.page,
+			per_page: result.per_page,
+		});
 	} catch (err) {
 		next(err);
 	}

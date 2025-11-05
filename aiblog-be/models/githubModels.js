@@ -98,3 +98,45 @@ export function normalizeCommitItems(commits) {
 		};
 	});
 }
+
+export function validateMyPullRequestsQuery(query) {
+	const out = {
+		repo: String(query.repo || "").trim(),
+		state: (query.state || "all").toString(), // open | closed | all
+		per_page: query.per_page ? Number(query.per_page) : 20,
+		page: query.page ? Number(query.page) : 1,
+	};
+
+	if (!out.repo || !out.repo.includes("/")) {
+		const err = new Error('Invalid query: repo must be "owner/name"');
+		err.status = 400;
+		throw err;
+	}
+
+	const allowedStates = new Set(["open", "closed", "all"]);
+	if (!allowedStates.has(out.state)) out.state = "all";
+
+	if (Number.isNaN(out.per_page) || out.per_page < 1) out.per_page = 20;
+	if (Number.isNaN(out.page) || out.page < 1) out.page = 1;
+
+	return out;
+}
+
+export function normalizePrItems(prs) {
+	return (prs || []).map((pr) => ({
+		id: pr.id,
+		number: pr.number,
+		type: "pull_request",
+		title: pr.title || "(no title)",
+		body: pr.body || undefined,
+		html_url: pr.html_url,
+		state: pr.state,
+		is_merged: !!pr.is_merged,
+		repo: pr.repo,
+		time: pr.created_at || pr.updated_at || null,
+		author: {
+			name: pr.user?.login || undefined,
+			avatar_url: pr.user?.avatar_url || undefined,
+		},
+	}));
+}

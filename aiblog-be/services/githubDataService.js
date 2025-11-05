@@ -1,10 +1,12 @@
 import {
 	listRecentCommitsRepo,
 	listMyReposRepo,
+	listPullRequestsRepo,
 } from "../repositories/githubRepository.js";
 import {
 	normalizeCommitItems,
 	normalizeRepoItems,
+	normalizePrItems,
 } from "../models/githubModels.js";
 
 export async function listMyReposService(params) {
@@ -38,4 +40,19 @@ export async function listRecentCommitsService(params) {
 
 	const items = normalizeCommitItems(commits);
 	return { items, meta };
+}
+
+export async function listMyPullRequestsService(params) {
+	const { token, repoFullName, state, per_page, page } = params;
+
+	const { prs, total, meta } = await listPullRequestsRepo({
+		token,
+		repoFullName,
+		state,
+		per_page,
+		page,
+	});
+
+	const items = normalizePrItems(prs);
+	return { items, total, meta, page, per_page };
 }

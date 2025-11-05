@@ -135,7 +135,7 @@ Content-Type: application/json
 
 #### Recent Commits
 
-API to fetch recent commit data from my Github repository.
+API to fetch recent commit data from a specific Github repository.
 
 ```plaintext
 GET /github-data/recent-commits
@@ -153,4 +153,25 @@ Content-Type: application/json
   - `since` (string (ISO 8601), optional): `2025-11-01T00:00:00Z`
   - `until` (string (ISO 8601), optional): `2025-11-02T00:00:00Z`
   - `per_page` (number, number of commits to fetch, optional): `20`
+  - `page` (number, page number to fetch, optional): `1`
+
+#### My Pull Requests
+
+API to fetch my pull request data from a specific Github repository.
+
+```plaintext
+GET /github-data/my-pull-requests
+```
+
+- Headers:
+
+```plaintext
+Authorization: Bearer ghp_YOUR_TOKEN
+Content-Type: application/json
+```
+
+- Query Parameters:
+  - `repo` (string): `boostcampwm-snu-2025/REPO_NAME`
+  - `state` (string, PR filter by PR state, optional): `open` / `closed` / `all`
+  - `per_page` (number, number of PRs to fetch, optional): `20`
   - `page` (number, page number to fetch, optional): `1`
