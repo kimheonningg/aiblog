@@ -23,6 +23,20 @@
     - 각 `RepoCard` 의 `PRs` 버튼 클릭 시 그 repo의 내 PR 30개 가져와서 보여주도록 (페이지 당 1개씩): `PRList.tsx`
   - `RepoGrid.tsx`: maps `RepoCard`s and shows all repos
 
+#### 완료 작업 사진
+
+- `Github` tab 클릭 시의 메인 페이지:
+
+![GithubMainPage](./assets/1st_week/GithubMainPage.png)
+
+- `Commits` button 클릭 시:
+
+![CommitList](./assets/1st_week/CommitList.png)
+
+- `PRs` button 클릭 시:
+
+![PRList](./assets/1st_week/PRList.png)
+
 ### 2주차
 
 - OpenAI API 연동
