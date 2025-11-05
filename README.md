@@ -24,6 +24,15 @@
 
 ### Vite Frontend
 
+First set up the `.env` file at frontend root directory `aiblog-fe/`:
+
+```bash
+# check .env.example
+cp .env.example .env
+```
+
+Now run the project:
+
 ```bash
 # move to the frontend project directory
 cd aiblog-fe
