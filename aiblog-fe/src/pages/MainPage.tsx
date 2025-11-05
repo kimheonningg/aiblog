@@ -6,7 +6,7 @@ import type { HeaderTabType } from "../types/headerTab";
 
 import RepoGrid from "../ui/GithubPage/RepoGrid";
 import type { RepoItem } from "../types/githubRepoData";
-import { fetchMyPublicRepos } from "../utils/api/github";
+import { fetchMyPublicRepos } from "../utils/api/githubRepo";
 
 const mainPageStyles = {
 	container: {
