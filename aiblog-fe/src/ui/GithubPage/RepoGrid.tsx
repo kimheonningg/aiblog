@@ -9,6 +9,7 @@ interface RepoGridProps {
 const repoGridStyles: {
 	empty: CSSProperties;
 	grid: CSSProperties;
+	title: CSSProperties;
 } = {
 	empty: {
 		padding: 24,
@@ -19,6 +20,13 @@ const repoGridStyles: {
 		display: "flex",
 		flexDirection: "column",
 		gap: 12,
+		marginBottom: 20,
+	},
+	title: {
+		padding: 12,
+		fontWeight: 800,
+		fontSize: 20,
+		color: "var(--gray-800)",
 	},
 };
 
@@ -33,6 +41,7 @@ const RepoGrid = ({ repos }: RepoGridProps) => {
 
 	return (
 		<div style={repoGridStyles.grid}>
+			<div style={repoGridStyles.title}>My Github Public Repositories:</div>
 			{repos.map((r) => (
 				<RepoCard key={r.id} repo={r} />
 			))}

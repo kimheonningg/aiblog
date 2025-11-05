@@ -24,6 +24,9 @@ const mainPageStyles = {
 	errorMessage: {
 		marginTop: 8,
 	},
+	loadingMessage: {
+		marginLeft: 16,
+	},
 };
 
 const MainPage = () => {
@@ -61,7 +64,9 @@ const MainPage = () => {
 
 			{currentTab === "github" && (
 				<>
-					{loading && <div>loading ...</div>}
+					{loading && (
+						<div style={mainPageStyles.loadingMessage}>Loading ...</div>
+					)}
 
 					{error && (
 						<div className="card" style={mainPageStyles.errorCard}>
