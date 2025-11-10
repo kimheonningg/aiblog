@@ -5,3 +5,5 @@ export const MY_REPOS_API = `${API_BASE_URL}/github-data/my-repos`;
 export const RECENT_COMMITS_API = `${API_BASE_URL}/github-data/recent-commits`;
 
 export const MY_PULL_REQUESTS_API = `${API_BASE_URL}/github-data/my-pull-requests`;
+
+export const ABOUTS_GENERATE_API = `${API_BASE_URL}/about/generate`;

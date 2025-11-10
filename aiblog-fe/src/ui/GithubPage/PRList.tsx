@@ -2,6 +2,10 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 import type { PRItem } from "../../types/githubPRData";
 
+interface PRListProps {
+	items: PRItem[];
+}
+
 const prListStyles: {
 	wrap: CSSProperties;
 	headerRow: CSSProperties;
@@ -91,7 +95,7 @@ const prListStyles: {
 	pageInfo: { fontSize: 13, color: "var(--gray-700)", fontWeight: 600 },
 };
 
-const PRList = ({ items }: { items: PRItem[] }) => {
+const PRList = ({ items }: PRListProps) => {
 	const [page, setPage] = useState(1);
 	const perPage = 1;
 	const totalPages = Math.max(1, Math.ceil((items?.length ?? 0) / perPage));

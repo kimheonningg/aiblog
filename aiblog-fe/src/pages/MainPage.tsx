@@ -8,6 +8,8 @@ import RepoGrid from "../ui/GithubPage/RepoGrid";
 import type { RepoItem } from "../types/githubRepoData";
 import { fetchMyPublicRepos } from "../utils/api/githubRepo";
 
+import AboutPage from "../ui/AboutPage/AboutPage";
+
 const mainPageStyles = {
 	container: {
 		display: "grid",
@@ -78,6 +80,8 @@ const MainPage = () => {
 					{!loading && !error && <RepoGrid repos={repos} />}
 				</>
 			)}
+
+			{currentTab === "about" && <AboutPage />}
 		</div>
 	);
 };
