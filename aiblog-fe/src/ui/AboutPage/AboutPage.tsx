@@ -8,6 +8,8 @@ import { fetchAbout } from "../../utils/api/about";
 
 import AboutCard from "./AboutCard";
 
+import { Select, MenuItem, FormControl, InputLabel, Box } from "@mui/material";
+
 const aboutPageStyles: {
 	wrap: CSSProperties;
 	form: CSSProperties;
@@ -15,14 +17,16 @@ const aboutPageStyles: {
 	label: CSSProperties;
 	input: CSSProperties;
 	select: CSSProperties;
+	menuBox: CSSProperties;
 	btnRow: CSSProperties;
+	btnRowWrapper: CSSProperties;
 	error: CSSProperties;
 	loading: CSSProperties;
 } = {
-	wrap: { display: "grid", gap: 16 },
+	wrap: { display: "grid", gap: 20 },
 	form: {
 		display: "grid",
-		gap: 10,
+		gap: 20,
 		padding: 16,
 		border: "1px solid var(--pink-200)",
 		borderRadius: 12,
@@ -43,7 +47,14 @@ const aboutPageStyles: {
 		outline: "none",
 		maxWidth: 220,
 	},
-	btnRow: { display: "flex", gap: 8, alignItems: "center" },
+	menuBox: { display: "flex", alignItems: "center", gap: 1 },
+	btnRow: {
+		display: "flex",
+		gap: 8,
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
+	btnRowWrapper: { display: "flex", gap: 24, marginRight: 30 },
 	error: {
 		padding: 12,
 		borderRadius: 10,
@@ -104,24 +115,73 @@ const AboutPage = () => {
 				</div>
 
 				<div style={aboutPageStyles.btnRow}>
-					<div style={{ display: "flex", gap: 8 }}>
-						<select
-							value={lang}
-							onChange={(e) => setLang(e.target.value as any)}
-							style={aboutPageStyles.select}
-						>
-							<option value="ko">Korean</option>
-							<option value="en">English</option>
-						</select>
-						<select
-							value={tone}
-							onChange={(e) => setTone(e.target.value as any)}
-							style={aboutPageStyles.select}
-						>
-							<option value="concise">Concise</option>
-							<option value="friendly">Friendly</option>
-							<option value="formal">Formal</option>
-						</select>
+					<div style={aboutPageStyles.btnRowWrapper}>
+						<Box sx={aboutPageStyles.menuBox}>
+							<FormControl size="small" sx={{ minWidth: 160 }}>
+								<InputLabel id="lang-label">Language</InputLabel>
+								<Select
+									labelId="lang-label"
+									label="Language"
+									value={lang}
+									onChange={(e) => setLang(e.target.value as any)}
+									renderValue={(v) => (
+										<Box sx={aboutPageStyles.menuBox}>
+											<span>{v === "ko" ? "Korean" : "English"}</span>
+										</Box>
+									)}
+								>
+									<MenuItem value="ko">
+										<Box sx={aboutPageStyles.menuBox}>
+											<span>Korean</span>
+										</Box>
+									</MenuItem>
+									<MenuItem value="en">
+										<Box sx={aboutPageStyles.menuBox}>
+											<span>English</span>
+										</Box>
+									</MenuItem>
+								</Select>
+							</FormControl>
+						</Box>
+
+						<Box sx={aboutPageStyles.menuBox}>
+							<FormControl size="small" sx={{ minWidth: 160 }}>
+								<InputLabel id="tone-label">Tone</InputLabel>
+								<Select
+									labelId="tone-label"
+									label="Tone"
+									value={tone}
+									onChange={(e) => setTone(e.target.value as any)}
+									renderValue={(v) => (
+										<Box sx={aboutPageStyles.menuBox}>
+											<span>
+												{v === "concise"
+													? "Concise"
+													: v === "friendly"
+													? "Friendly"
+													: "Formal"}
+											</span>
+										</Box>
+									)}
+								>
+									<MenuItem value="concise">
+										<Box sx={aboutPageStyles.menuBox}>
+											<span>Concise</span>
+										</Box>
+									</MenuItem>
+									<MenuItem value="friendly">
+										<Box sx={aboutPageStyles.menuBox}>
+											<span>Friendly</span>
+										</Box>
+									</MenuItem>
+									<MenuItem value="formal">
+										<Box sx={aboutPageStyles.menuBox}>
+											<span>Formal</span>
+										</Box>
+									</MenuItem>
+								</Select>
+							</FormControl>
+						</Box>
 					</div>
 
 					<button
