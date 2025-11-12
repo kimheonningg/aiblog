@@ -5,13 +5,7 @@ import RepoGrid from "./RepoGrid";
 import type { RepoItem } from "../../types/githubRepoData";
 import { fetchMyPublicRepos } from "../../utils/api/githubRepo";
 
-const githubPageStyles: {
-	wrap: CSSProperties;
-	errorCard: CSSProperties;
-	errorTitle: CSSProperties;
-	errorMessage: CSSProperties;
-	loadingMessage: CSSProperties;
-} = {
+const githubPageStyles: Record<string, CSSProperties> = {
 	wrap: { display: "grid", gap: 16 },
 	errorCard: {
 		padding: 16,

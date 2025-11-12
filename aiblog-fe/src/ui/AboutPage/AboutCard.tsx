@@ -5,17 +5,7 @@ interface AboutCardProps {
 	data: AboutResponse;
 }
 
-const aboutStyles: {
-	wrap: CSSProperties;
-	header: CSSProperties;
-	avatar: CSSProperties;
-	nameRow: CSSProperties;
-	title: CSSProperties;
-	sub: CSSProperties;
-	chipRow: CSSProperties;
-	chip: CSSProperties;
-	aboutBox: CSSProperties;
-} = {
+const aboutStyles: Record<string, CSSProperties> = {
 	wrap: {
 		display: "grid",
 		gap: 12,

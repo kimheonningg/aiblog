@@ -8,7 +8,7 @@ import { generatePost } from "../../utils/api/post";
 import PostForm from "./PostForm";
 import PostResult from "./PostResult";
 
-const postsPageStyles: { [key: string]: CSSProperties } = {
+const postsPageStyles: Record<string, CSSProperties> = {
 	wrap: { display: "grid", gap: 16 },
 	error: {
 		padding: 12,

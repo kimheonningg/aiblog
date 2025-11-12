@@ -9,7 +9,7 @@ interface PostResultProps {
 	data: PostGenerateResponse;
 }
 
-const postResultStyles: { [key: string]: CSSProperties } = {
+const postResultStyles: Record<string, CSSProperties> = {
 	wrap: {
 		padding: 16,
 		borderRadius: 12,

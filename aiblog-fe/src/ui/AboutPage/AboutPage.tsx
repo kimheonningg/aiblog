@@ -12,19 +12,7 @@ import AboutCard from "./AboutCard";
 import LanguageSelectBox from "../SelectBox/LanguageSelectBox";
 import ToneSelectBox from "../SelectBox/ToneSelectBox";
 
-const aboutPageStyles: {
-	wrap: CSSProperties;
-	form: CSSProperties;
-	row: CSSProperties;
-	label: CSSProperties;
-	input: CSSProperties;
-	select: CSSProperties;
-	menuBox: CSSProperties;
-	btnRow: CSSProperties;
-	btnRowWrapper: CSSProperties;
-	error: CSSProperties;
-	loading: CSSProperties;
-} = {
+const aboutPageStyles: Record<string, CSSProperties> = {
 	wrap: { display: "grid", gap: 20 },
 	form: {
 		display: "grid",
