@@ -111,3 +111,33 @@ export async function listPullRequestsRepo({
 		meta,
 	};
 }
+
+export async function getCommitByShaRepo({ token, owner, name, sha }) {
+	const octokit = makeOctokit(token);
+	const res = await octokit.repos.getCommit({
+		owner,
+		repo: name,
+		ref: sha,
+	});
+	return res.data;
+}
+
+export async function getPRByNumberRepo({ token, owner, name, number }) {
+	const octokit = makeOctokit(token);
+	const res = await octokit.pulls.get({
+		owner,
+		repo: name,
+		pull_number: number,
+	});
+	return res.data;
+}
+
+export async function assertRepoIsPublicRepo({ token, owner, name }) {
+	const octokit = makeOctokit(token);
+	const { data } = await octokit.repos.get({ owner, repo: name });
+	if (data.private) {
+		const err = new Error("Forbidden: private repository not allowed");
+		err.status = 403;
+		throw err;
+	}
+}
