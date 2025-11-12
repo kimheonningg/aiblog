@@ -14,4 +14,9 @@ app.use(express.json());
 app.use("/test", testRoutes);
 app.use("/github-data", githubDataRoutes);
 
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(err.status || 500).json({ error: err.message });
+});
+
 export default app;
