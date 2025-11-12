@@ -54,6 +54,24 @@
 - `Lang`, `Tone` selectbox UI 컴포넌트화 (재사용): `LanguageSelectBox.tsx`, `ToneSelectBox.tsx`
 - OpenAI API prompt 문서화
 
+#### 완료 작업 사진
+
+- `Posts` tab 클릭 시의 메인 페이지:
+
+![PostsPage](./assets/2nd_week/PostsPage.png)
+
+- `Posts` tab에서 글 생성:
+
+![PostsPageGenerated](./assets/2nd_week/PostsPageGenerated.png)
+
+- `About` tab 클릭 시의 메인 페이지:
+
+![AboutPage](./assets/2nd_week/AboutPage.png)
+
+- `About` tab에서 소개글 생성:
+
+![AboutPageGenerated](./assets/2nd_week/AboutPageGenerated.png)
+
 ### 3주차
 
 - 생성된 글 저장 및 불러오기 기능
