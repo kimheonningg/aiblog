@@ -50,8 +50,8 @@
   - About 탭:
     - `AboutCard.tsx`
     - `AboutPage.tsx`
-- Posts, About에 공통으로 사용되는 `Lang`, `Tone` type 하나로 통일
-- `Lang`, `Tone` selectbox UI 컴포넌트화 (재사용)
+- Posts, About에 공통으로 사용되는 `Lang`, `Tone` type 하나로 통일: types `PromptLang`, `PromptTone`
+- `Lang`, `Tone` selectbox UI 컴포넌트화 (재사용): `LanguageSelectBox.tsx`, `ToneSelectBox.tsx`
 - OpenAI API prompt 문서화
 
 ### 3주차

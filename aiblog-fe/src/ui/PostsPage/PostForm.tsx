@@ -4,6 +4,9 @@ import { useState } from "react";
 import type { PostGenerateRequest } from "../../types/githubPostData";
 import type { PromptLang, PromptTone } from "../../types/promptSettings";
 
+import LanguageSelectBox from "../SelectBox/LanguageSelectBox";
+import ToneSelectBox from "../SelectBox/ToneSelectBox";
+
 interface PostFormProps {
 	onSubmit: (data: PostGenerateRequest) => void;
 	loading: boolean;
@@ -82,23 +85,8 @@ const PostForm = ({ onSubmit, loading }: PostFormProps) => {
 			</div>
 
 			<div style={{ display: "flex", gap: 8 }}>
-				<select
-					value={lang}
-					onChange={(e) => setLang(e.target.value as any)}
-					style={formStyles.select}
-				>
-					<option value="ko">Korean</option>
-					<option value="en">English</option>
-				</select>
-				<select
-					value={tone}
-					onChange={(e) => setTone(e.target.value as any)}
-					style={formStyles.select}
-				>
-					<option value="concise">Concise</option>
-					<option value="friendly">Friendly</option>
-					<option value="formal">Formal</option>
-				</select>
+				<LanguageSelectBox value={lang} onChange={setLang} />
+				<ToneSelectBox value={tone} onChange={setTone} />
 			</div>
 
 			<button
