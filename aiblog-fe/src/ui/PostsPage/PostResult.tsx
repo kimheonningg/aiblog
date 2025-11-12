@@ -9,7 +9,7 @@ interface PostResultProps {
 	data: PostGenerateResponse;
 }
 
-const resultStyles: { [key: string]: CSSProperties } = {
+const postResultStyles: { [key: string]: CSSProperties } = {
 	wrap: {
 		padding: 16,
 		borderRadius: 12,
@@ -31,9 +31,9 @@ const resultStyles: { [key: string]: CSSProperties } = {
 
 const PostResult = ({ data }: PostResultProps) => {
 	return (
-		<div style={resultStyles.wrap}>
-			<div style={resultStyles.title}>Generated Post</div>
-			<div style={{ ...resultStyles.markdown, ...markdownBaseStyles }}>
+		<div style={postResultStyles.wrap}>
+			<div style={postResultStyles.title}>Generated Post</div>
+			<div style={{ ...postResultStyles.markdown, ...markdownBaseStyles }}>
 				<ReactMarkdown
 					remarkPlugins={[remarkGfm]}
 					components={markdownComponents}

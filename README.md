@@ -44,6 +44,7 @@
 - Blog contents (post) 자동 생성하도록 OpenAI API 사용
   - Posts 탭:
     - `PostForm.tsx`
+      - 나의 Repo 목록 불러오고, 선택된 repo에 해당하는 commit과 PR 목록을 불러와서 Select box로 구현
     - `PostResult.tsx`
     - `PostsPage.tsx`
 - About 글 자동 생성하도록 OpenAI API 사용
