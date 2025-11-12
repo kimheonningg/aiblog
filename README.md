@@ -207,6 +207,30 @@ Content-Type: application/json
   - `per_page` (number, number of PRs to fetch, optional): `20`
   - `page` (number, page number to fetch, optional): `1`
 
+### 'Posts' Page API
+
+API to generate the 'Posts' page content (post) using my Github data and OpenAI API.
+
+```plaintext
+GET /post/generate
+```
+
+- Headers:
+
+```plaintext
+Authorization: Bearer ghp_YOUR_GITHUB_TOKEN
+Content-Type: application/json
+```
+
+- Query Parameters:
+  - `repo` (string, `owner/name`): `kimheonningg/aiblog`
+  - `commits` (string[], optional)
+  - `prs` (number[], optional)
+  - `lang` (string, optional): `kr` / `en`
+  - `tone` (string, optional): `concise` / `friendly` / `formal`
+
+Either `commits` or `prs` must be provided. (At least one is required)
+
 ### 'About' Page API
 
 API to generate the 'About' page content using my Github data and OpenAI API.
