@@ -39,9 +39,20 @@
 
 ### 2주차
 
-- OpenAI API 연동
-- Blog contents 자동 생성하도록 OpenAI API 사용
-- About 글도 자동 생성하도록 OpenAI API 사용
+- 1주차 PR 리뷰 반영하기(code convention 등)
+- OpenAI API 연동 (Backend의 `.env`에 OpenAI API key 저장됨)
+- Blog contents (post) 자동 생성하도록 OpenAI API 사용
+  - Posts 탭:
+    - `PostForm.tsx`
+    - `PostResult.tsx`
+    - `PostsPage.tsx`
+- About 글 자동 생성하도록 OpenAI API 사용
+  - About 탭:
+    - `AboutCard.tsx`
+    - `AboutPage.tsx`
+- Posts, About에 공통으로 사용되는 `Lang`, `Tone` type 하나로 통일
+- `Lang`, `Tone` selectbox UI 컴포넌트화 (재사용)
+- OpenAI API prompt 문서화
 
 ### 3주차
 
