@@ -1,7 +1,7 @@
-import type { PromptLang, PromptTone } from "../types/promptSettings";
-import type { PostGenerateResponse } from "../types/githubPostData";
+import type { PromptLang, PromptTone } from "../../types/promptSettings";
+import type { PostGenerateResponse } from "../../types/githubPostData";
 
-import { STORAGE_KEY } from "../constants/storage";
+import { POSTS_STORAGE_KEY } from "../../constants/storage";
 
 export type SavedPost = {
   id: string;
@@ -19,7 +19,7 @@ const isBrowser = () =>
 export function loadSavedPosts(): SavedPost[] {
   if (!isBrowser()) return [];
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(POSTS_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
@@ -32,7 +32,7 @@ export function loadSavedPosts(): SavedPost[] {
 function saveSavedPosts(posts: SavedPost[]) {
   if (!isBrowser()) return;
   try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+    window.localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
   } catch {
     // Do nothing
   }
@@ -70,7 +70,7 @@ export function addSavedPost(input: {
 export function clearSavedPosts() {
   if (!isBrowser()) return;
   try {
-    window.localStorage.removeItem(STORAGE_KEY);
+    window.localStorage.removeItem(POSTS_STORAGE_KEY);
   } catch {
     // Do nothing
   }

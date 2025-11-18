@@ -13,7 +13,7 @@ import {
   addSavedPost,
   clearSavedPosts,
   type SavedPost,
-} from "../../utils/postStorage";
+} from "../../utils/storage/postStorage";
 
 const postsPageStyles: Record<string, CSSProperties> = {
   wrap: { display: "grid", gap: 16, marginBottom: 50 },
