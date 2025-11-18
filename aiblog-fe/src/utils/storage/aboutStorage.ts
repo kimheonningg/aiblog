@@ -1,9 +1,7 @@
 import type { AboutResponse } from "../../types/about";
 
 import { ABOUT_STORAGE_KEY } from "../../constants/storage";
-
-const isBrowser = () =>
-  typeof window !== "undefined" && typeof window.localStorage !== "undefined";
+import { isBrowser } from "../isBrowser";
 
 export function loadLatestAbout(): AboutResponse | null {
   if (!isBrowser()) return null;

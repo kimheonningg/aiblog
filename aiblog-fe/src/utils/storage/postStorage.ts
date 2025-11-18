@@ -2,6 +2,7 @@ import type { PromptLang, PromptTone } from "../../types/promptSettings";
 import type { PostGenerateResponse } from "../../types/githubPostData";
 
 import { POSTS_STORAGE_KEY } from "../../constants/storage";
+import { isBrowser } from "../isBrowser";
 
 export type SavedPost = {
   id: string;
@@ -12,9 +13,6 @@ export type SavedPost = {
   content: string;
   sources: PostGenerateResponse["sources"];
 };
-
-const isBrowser = () =>
-  typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 
 export function loadSavedPosts(): SavedPost[] {
   if (!isBrowser()) return [];
