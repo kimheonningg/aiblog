@@ -66,6 +66,11 @@ const postsPageStyles: Record<string, CSSProperties> = {
     padding: 8,
     display: "grid",
     gap: 4,
+    cursor: "pointer",
+  },
+  savedItemSelected: {
+    border: "1px solid var(--pink-400)",
+    background: "var(--pink-50)",
   },
   savedItemTitle: {
     fontWeight: 600,
@@ -113,19 +118,26 @@ function extractPreview(markdown: string): string {
 }
 
 const PostsPage = () => {
-  const [data, setData] = useState<PostGenerateResponse | null>(null);
+  // Current post to show at screen (generated or clicked)
+  const [currentData, setCurrentData] = useState<PostGenerateResponse | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Saved posts in localStorage
   const [savedPosts, setSavedPosts] = useState<SavedPost[]>(() =>
     loadSavedPosts()
   );
+  const [selectedSavedId, setSelectedSavedId] = useState<string | null>(null);
 
   async function handleGenerate(req: PostGenerateRequest) {
     setLoading(true);
     setError(null);
     try {
       const res = await generatePost(req);
-      setData(res);
+      setCurrentData(res);
+      setSelectedSavedId(null); // Newly generated post will be activated
 
       const next = addSavedPost({
         repo: req.repo,
@@ -137,7 +149,7 @@ const PostsPage = () => {
       setSavedPosts(next);
     } catch (e: any) {
       setError(e?.message ?? "Failed to generate post");
-      setData(null);
+      setCurrentData(null);
     } finally {
       setLoading(false);
     }
@@ -146,6 +158,19 @@ const PostsPage = () => {
   const handleClearSaved = () => {
     clearSavedPosts();
     setSavedPosts([]);
+    setSelectedSavedId(null);
+  };
+
+  const handleClickSavedPost = (post: SavedPost) => {
+    const dataFromSaved: PostGenerateResponse = {
+      post: {
+        format: "markdown",
+        content: post.content,
+      },
+      sources: post.sources,
+    };
+    setCurrentData(dataFromSaved);
+    setSelectedSavedId(post.id);
   };
 
   return (
@@ -154,7 +179,7 @@ const PostsPage = () => {
 
       {error && <div style={postsPageStyles.error}>{error}</div>}
       {loading && <div style={postsPageStyles.loading}>Generating...</div>}
-      {!loading && !error && data && <PostResult data={data} />}
+      {!loading && !error && currentData && <PostResult data={currentData} />}
 
       <div style={postsPageStyles.savedBlock}>
         <div style={postsPageStyles.savedHeaderRow}>
@@ -176,25 +201,35 @@ const PostsPage = () => {
             </div>
           )}
 
-          {savedPosts.map((post) => (
-            <div key={post.id} style={postsPageStyles.savedItem}>
-              <p style={postsPageStyles.savedItemTitle}>
-                {extractTitle(post.content)}
-              </p>
-              <div style={postsPageStyles.savedMetaRow}>
-                <span style={postsPageStyles.savedMetaTag}>{post.repo}</span>
-                <span style={postsPageStyles.savedMetaTag}>
-                  {post.lang} · {post.tone}
-                </span>
-                <span style={postsPageStyles.savedMetaTag}>
-                  {new Date(post.createdAt).toLocaleString()}
-                </span>
+          {savedPosts.map((post) => {
+            const isSelected = post.id === selectedSavedId;
+            return (
+              <div
+                key={post.id}
+                style={{
+                  ...postsPageStyles.savedItem,
+                  ...(isSelected ? postsPageStyles.savedItemSelected : {}),
+                }}
+                onClick={() => handleClickSavedPost(post)}
+              >
+                <p style={postsPageStyles.savedItemTitle}>
+                  {extractTitle(post.content)}
+                </p>
+                <div style={postsPageStyles.savedMetaRow}>
+                  <span style={postsPageStyles.savedMetaTag}>{post.repo}</span>
+                  <span style={postsPageStyles.savedMetaTag}>
+                    {post.lang} · {post.tone}
+                  </span>
+                  <span style={postsPageStyles.savedMetaTag}>
+                    {new Date(post.createdAt).toLocaleString()}
+                  </span>
+                </div>
+                <div style={postsPageStyles.savedPreview}>
+                  {extractPreview(post.content)}
+                </div>
               </div>
-              <div style={postsPageStyles.savedPreview}>
-                {extractPreview(post.content)}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
