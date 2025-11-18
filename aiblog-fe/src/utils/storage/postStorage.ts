@@ -1,18 +1,9 @@
 import type { PromptLang, PromptTone } from "../../types/promptSettings";
 import type { PostGenerateResponse } from "../../types/githubPostData";
+import type { SavedPost } from "../../types/savedPost";
 
 import { POSTS_STORAGE_KEY } from "../../constants/storage";
 import { isBrowser } from "../isBrowser";
-
-export type SavedPost = {
-  id: string;
-  createdAt: string;
-  repo: string;
-  lang: PromptLang;
-  tone: PromptTone;
-  content: string;
-  sources: PostGenerateResponse["sources"];
-};
 
 export function loadSavedPosts(): SavedPost[] {
   if (!isBrowser()) return [];
